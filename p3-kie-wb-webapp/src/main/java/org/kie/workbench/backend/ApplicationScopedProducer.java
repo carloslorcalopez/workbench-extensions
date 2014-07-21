@@ -22,6 +22,8 @@ import org.kie.internal.runtime.manager.RuntimeEnvironment;
 import org.kie.internal.runtime.manager.cdi.qualifier.PerProcessInstance;
 import org.kie.internal.runtime.manager.cdi.qualifier.PerRequest;
 import org.kie.internal.runtime.manager.cdi.qualifier.Singleton;
+import org.kie.workbench.backend.iolistener.IOServiceListener;
+import org.kie.workbench.backend.iolistener.IOServiceListenerWrapper;
 import org.uberfire.backend.server.IOWatchServiceNonDotImpl;
 import org.uberfire.backend.server.io.IOSecurityAuth;
 import org.uberfire.backend.server.io.IOSecurityAuthz;
@@ -120,7 +122,27 @@ public class ApplicationScopedProducer {
 
         this.ioSearchService = new IOSearchIndex( config.getSearchIndex(),
                                                   ioService );
+        
+        initIOServiceListenerWrapper();
     }
+
+	private void initIOServiceListenerWrapper() {
+		String ioServiceListener = System.getProperty("org.uberfire.ioService.listeners");
+		IOServiceListenerWrapper ioServiceWrapper = new IOServiceListenerWrapper(ioService);
+        if (ioServiceListener != null) {
+        	String[] listenerClasses = ioServiceListener.split(",");
+        	for (int index = 0; index < listenerClasses.length; index++) {
+        		try {
+        			Class<?> clazz = Class.forName(listenerClasses[index]);
+        			IOServiceListener listener = (IOServiceListener) clazz.newInstance();
+        			ioServiceWrapper.addListener(listener);
+        		} catch (Exception e) {
+        			
+        		}
+        	}		
+        	ioService = ioServiceWrapper;
+        }
+	}
 
     @PreDestroy
     private void cleanup() {
