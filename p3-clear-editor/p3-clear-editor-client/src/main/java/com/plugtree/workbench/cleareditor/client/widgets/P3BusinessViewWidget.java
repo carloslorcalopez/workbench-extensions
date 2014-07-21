@@ -12,6 +12,29 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.guvnor.common.services.project.model.Project;
+import org.jboss.errai.ioc.client.container.IOC;
+import org.kie.workbench.common.screens.explorer.client.resources.i18n.ProjectExplorerConstants;
+import org.kie.workbench.common.screens.explorer.client.utils.Classifier;
+import org.kie.workbench.common.screens.explorer.client.utils.Utils;
+import org.kie.workbench.common.screens.explorer.client.widgets.View;
+import org.kie.workbench.common.screens.explorer.client.widgets.ViewPresenter;
+import org.kie.workbench.common.screens.explorer.client.widgets.business.TriggerWidget;
+import org.kie.workbench.common.screens.explorer.client.widgets.navigator.Explorer;
+import org.kie.workbench.common.screens.explorer.client.widgets.navigator.NavigatorOptions;
+import org.kie.workbench.common.screens.explorer.model.FolderItem;
+import org.kie.workbench.common.screens.explorer.model.FolderItemType;
+import org.kie.workbench.common.screens.explorer.model.FolderListing;
+import org.kie.workbench.common.screens.explorer.service.Option;
+import org.kie.workbench.common.screens.explorer.utils.Sorters;
+import org.uberfire.backend.organizationalunit.OrganizationalUnit;
+import org.uberfire.backend.repositories.Repository;
+import org.uberfire.backend.vfs.Path;
+import org.uberfire.client.common.BusyPopup;
+import org.uberfire.client.mvp.PlaceManager;
+import org.uberfire.client.workbench.type.AnyResourceType;
+import org.uberfire.client.workbench.type.ClientResourceType;
+
 import com.github.gwtbootstrap.client.ui.Collapse;
 import com.github.gwtbootstrap.client.ui.CollapseTrigger;
 import com.github.gwtbootstrap.client.ui.Divider;
@@ -28,26 +51,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
-
-import org.guvnor.common.services.project.model.Project;
-import org.kie.workbench.common.screens.explorer.client.resources.i18n.ProjectExplorerConstants;
-import org.kie.workbench.common.screens.explorer.client.utils.Classifier;
-import org.kie.workbench.common.screens.explorer.client.utils.Utils;
-import org.kie.workbench.common.screens.explorer.client.widgets.View;
-import org.kie.workbench.common.screens.explorer.client.widgets.ViewPresenter;
-import org.kie.workbench.common.screens.explorer.client.widgets.navigator.Explorer;
-import org.kie.workbench.common.screens.explorer.client.widgets.navigator.NavigatorOptions;
-import org.kie.workbench.common.screens.explorer.model.FolderItem;
-import org.kie.workbench.common.screens.explorer.model.FolderItemType;
-import org.kie.workbench.common.screens.explorer.model.FolderListing;
-import org.kie.workbench.common.screens.explorer.service.Option;
-import org.kie.workbench.common.screens.explorer.utils.Sorters;
-import org.uberfire.backend.organizationalunit.OrganizationalUnit;
-import org.uberfire.backend.repositories.Repository;
-import org.uberfire.backend.vfs.Path;
-import org.uberfire.client.common.BusyPopup;
-import org.uberfire.client.workbench.type.AnyResourceType;
-import org.uberfire.client.workbench.type.ClientResourceType;
 
 /**
  * Business View implementation
@@ -237,7 +240,7 @@ public class P3BusinessViewWidget extends Composite implements View {
     
     private void loadResourceSelected(){
     	if(_item != null){
-    		presenter.loadItemSelected( _item );
+    		IOC.getBeanManager().lookupBean(PlaceManager.class).getInstance().goTo( (Path) _item);
     	}
     }
     

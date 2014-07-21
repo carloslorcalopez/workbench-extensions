@@ -14,7 +14,7 @@ import org.kie.workbench.common.screens.explorer.service.Option;
  * Asset Viewer 
  */
 @ApplicationScoped
-public class BusinessViewPresenterImpl extends BaseViewPresenter {
+public class SingleBusinessViewPresenterImpl extends BaseViewPresenter {
 
     @Inject
     protected P3BusinessViewWidget view;

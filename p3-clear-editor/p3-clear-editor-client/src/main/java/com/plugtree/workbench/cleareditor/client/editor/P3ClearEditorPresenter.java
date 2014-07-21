@@ -1,25 +1,23 @@
 package com.plugtree.workbench.cleareditor.client.editor;
 
+import static com.github.gwtbootstrap.client.ui.resources.ButtonSize.MINI;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import com.github.gwtbootstrap.client.ui.Divider;
-import com.github.gwtbootstrap.client.ui.NavLink;
-import com.github.gwtbootstrap.client.ui.constants.IconSize;
-import com.github.gwtbootstrap.client.ui.constants.IconType;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Widget;
-import com.plugtree.workbench.cleareditor.client.widgets.SingleBusinessViewPresenterImpl;
 import org.guvnor.common.services.project.context.ProjectContext;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.ErrorCallback;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ioc.client.api.AfterInitialization;
+import org.kie.workbench.common.screens.explorer.client.ExplorerPresenter;
+import org.kie.workbench.common.screens.explorer.client.ExplorerPresenterImpl;
+import org.kie.workbench.common.screens.explorer.client.ExplorerView;
 import org.kie.workbench.common.screens.explorer.client.resources.i18n.ProjectExplorerConstants;
 import org.kie.workbench.common.screens.explorer.client.widgets.technical.TechnicalViewPresenterImpl;
 import org.kie.workbench.common.screens.explorer.service.ExplorerService;
@@ -39,7 +37,14 @@ import org.uberfire.workbench.model.menu.MenuItem;
 import org.uberfire.workbench.model.menu.MenuPosition;
 import org.uberfire.workbench.model.menu.Menus;
 
-import static com.github.gwtbootstrap.client.ui.resources.ButtonSize.*;
+import com.github.gwtbootstrap.client.ui.Divider;
+import com.github.gwtbootstrap.client.ui.NavLink;
+import com.github.gwtbootstrap.client.ui.constants.IconSize;
+import com.github.gwtbootstrap.client.ui.constants.IconType;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Widget;
+import com.plugtree.workbench.cleareditor.client.widgets.SingleBusinessViewPresenterImpl;
 
 /**
  * Asset Viewer
